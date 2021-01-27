@@ -346,6 +346,15 @@ function f_timestamp($time)
     }
 }
 
+// f_agecalculate - This will calculate the age in years based on the date provided 
+function agecalculator($dob){   
+    $date1 = $dob;
+    $date2 = DATE('Y-m-d H:i:s');
+    $diff = abs(strtotime($date2)-strtotime($date1));
+    $years = floor($diff / (365*60*60*24));    
+    return $years;
+}
+
 // ******************************************
 // User Defined Functions - End
 //*******************************************
