@@ -1,7 +1,7 @@
 <?php
+global $err, $msg;
 
 // ENTER THE CREDENTIALS AND BASIC APPLICATION SETTINGS
-
 $host = '127.0.0.1';
 $db   = 'test';
 $user = 'root';
