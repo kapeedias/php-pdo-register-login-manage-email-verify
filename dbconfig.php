@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Vancouver');
 global $err, $msg;
 
 // ENTER THE CREDENTIALS AND BASIC APPLICATION SETTINGS
