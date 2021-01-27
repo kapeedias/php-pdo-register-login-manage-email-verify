@@ -1,4 +1,4 @@
 <?php
-include '_include/config.php';
+include '_include/dbconfig.php';
 logout();
 ?>
