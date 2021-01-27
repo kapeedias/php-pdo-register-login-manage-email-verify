@@ -103,7 +103,7 @@ function page_protect() {
 		   }
 
 	  } else {
-		header("Location: $logout_destination_url");
+		header("Location: index.php");
 		exit();
 		}
 	}
@@ -133,7 +133,7 @@ function logout()
 	setcookie("user_id", '', time()-(60*60*24* $sessiontimeout), "/");
 	setcookie("user_name", '', time()-(60*60*24* $sessiontimeout), "/");
 	setcookie("user_key", '', time()-(60*60*24* $sessiontimeout), "/");
-	header("Location: $logout_destination_url");
+	header("Location: index.php");
 }
 
 function checkAdmin() {
