@@ -38,3 +38,14 @@ CREATE TABLE `members_users` (
   UNIQUE KEY `members_users_user_name` (`user_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+
+-- INSERT ADMIN USER INTO DATABASE
+
+INSERT INTO `members_users` 
+(`id`,`md5_id`,`first_name`,`last_name`,`gender`,`birthday`,`user_name`,`user_email`,`user_level`,`pwd`,
+`address`,`street`,`pic`,`city`,`zipcode`,`province`,`country`,`tel`,`website`,`users_ip`,`approved`,
+`email_verify`,`email_verified_on`,`verification_email_sent`,`activation_code`,`banned`,`ckey`,`ctime`,
+`date_created`) VALUES (1,'','ADMIN','USER','','1949-08-15','admin','admin@admin.com'
+,1,'$2y$12$NcI9XERIQJxLBYPTFjOtJ.3YTgzlnM2e2d8VDD/cgv2w6XFebW0F2','','','dist/img/profile.jpg'
+,'','','','','','','',1,'','1900-01-01 00:00:00','1900-01-01 00:00:00',0,0,'e3s7puc','1608159011'
+,'2021-01-27 00:00:00');
