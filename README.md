@@ -1,1 +1,1 @@
-# php-pdo-login-register-manage-email-verify
+PHP PDO Login,Register, Manage and Email verification system
