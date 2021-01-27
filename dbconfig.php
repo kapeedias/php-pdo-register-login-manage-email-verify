@@ -347,12 +347,30 @@ function f_timestamp($time)
 }
 
 // f_agecalculate - This will calculate the age in years based on the date provided 
-function agecalculator($dob){   
+function f_agecalculate($dob){   
     $date1 = $dob;
     $date2 = DATE('Y-m-d H:i:s');
     $diff = abs(strtotime($date2)-strtotime($date1));
     $years = floor($diff / (365*60*60*24));    
     return $years;
+}
+
+
+// f_genereatekey - This will generate a random key of length 8
+function f_genereatekey($length = 8)
+{
+  $password = "";
+  $possible = "0123456789abcdefghijkmnopqrstuvwxyz";   
+  $i = 0;    
+  while ($i < $length) {     
+    $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);         
+    if (!strstr($password, $char)) { 
+      $password .= $char;
+      $i++;
+    }
+  }
+  return $password;
+
 }
 
 // ******************************************
