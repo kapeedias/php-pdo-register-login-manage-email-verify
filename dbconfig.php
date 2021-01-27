@@ -256,7 +256,7 @@ function f_encryptcookie($value) {
 
 
 // f_decryptcookie - Decrypts cookies set
-function decryptcookie($ciphertext) {
+function f_decryptcookie($ciphertext) {
    $cipher = "aes-256-cbc";
    list($encrypted_data, $iv,$key) = explode('::', base64_decode($ciphertext));
    return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
@@ -274,7 +274,7 @@ function f_validateipv4($ip){
 }
 
 // f_formatphonenumber - This will format the inout phone number into +x (xxx) xxx-xxxx
-function formatPhoneNumber($phoneNumber) {
+function f_formatphonenumber($phoneNumber) {
     $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber);
     if(strlen($phoneNumber) > 10) {
         $countryCode = substr($phoneNumber, 0, strlen($phoneNumber)-10);
@@ -302,7 +302,7 @@ function formatPhoneNumber($phoneNumber) {
 
 
 // f_validatephone - This will validate if the user submitted data is a valid phone number - specific format (xxx) xxx-xxxx
-function isPhone($phone){
+function f_validatephone($phone){
     $formatphone = formatPhoneNumber($phone);
     if(preg_match('/\([0-9]{3}\) [0-9]{3}-[0-9]{4}/',$formatphone)) {
         return true;
@@ -313,7 +313,7 @@ function isPhone($phone){
 }
 
 // f_checkpasswordstrength - This will check if the password strength is good. Min. 8 characters, Max. 20 characters
-function pwdstrength($pwd) {
+function f_checkpasswordstrength($pwd) {
     if (preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#", $pwd)){
         return true;
     } else {
