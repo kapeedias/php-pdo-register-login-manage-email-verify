@@ -1,6 +1,7 @@
 <?php
 
-//this is where you enter all the server / host / db credentials.
+// ENTER THE CREDENTIALS AND BASIC APPLICATION SETTINGS
+
 $host = '127.0.0.1';
 $db   = 'test';
 $user = 'root';
@@ -8,6 +9,13 @@ $pass = '';
 $port = "3306";
 $charset = 'utf8mb4';
 $logout_destination_url = 'index.php';
+$send_email_verification = '1';
+$cookie_timeout =  "1"; // Default is 1 Hr.
+
+// DO NOT EDIT ANYTHING BELOW THIS //
+
+define ("ADMIN_LEVEL", 5);
+define ("GUEST", 0);
 
 $options = [
     \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
@@ -128,6 +136,13 @@ function logout()
 	header("Location: $logout_destination_url");
 }
 
+function checkAdmin() {
+	if($_SESSION['user_level'] == ADMIN_LEVEL) {
+		return 1;
+	} else {
+		return 0 ;
+	}
+}
 
 // ******************************************
 // User Defined Functions - Start
@@ -247,6 +262,89 @@ function decryptcookie($ciphertext) {
    return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
 }
 
+
+// f_validateipv4 - This will validate if the provided input is a valid IPv4 Address or not
+function f_validateipv4($ip){
+    if(preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/',$ip)){
+        return true;
+    }else{
+        return false;
+    }
+        
+}
+
+// f_formatphonenumber - This will format the inout phone number into +x (xxx) xxx-xxxx
+function formatPhoneNumber($phoneNumber) {
+    $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber);
+    if(strlen($phoneNumber) > 10) {
+        $countryCode = substr($phoneNumber, 0, strlen($phoneNumber)-10);
+        $areaCode = substr($phoneNumber, -10, 3);
+        $nextThree = substr($phoneNumber, -7, 3);
+        $lastFour = substr($phoneNumber, -4, 4);
+
+        $phoneNumber = '+'.$countryCode.' ('.$areaCode.') '.$nextThree.'-'.$lastFour;
+    }
+    else if(strlen($phoneNumber) == 10) {
+        $areaCode = substr($phoneNumber, 0, 3);
+        $nextThree = substr($phoneNumber, 3, 3);
+        $lastFour = substr($phoneNumber, 6, 4);
+
+        $phoneNumber = '('.$areaCode.') '.$nextThree.'-'.$lastFour;
+    }
+    else if(strlen($phoneNumber) == 7) {
+        $nextThree = substr($phoneNumber, 0, 3);
+        $lastFour = substr($phoneNumber, 3, 4);
+
+        $phoneNumber = $nextThree.'-'.$lastFour;
+    }
+    return $phoneNumber;
+}
+
+
+// f_validatephone - This will validate if the user submitted data is a valid phone number - specific format (xxx) xxx-xxxx
+function isPhone($phone){
+    $formatphone = formatPhoneNumber($phone);
+    if(preg_match('/\([0-9]{3}\) [0-9]{3}-[0-9]{4}/',$formatphone)) {
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+// f_checkpasswordstrength - This will check if the password strength is good. Min. 8 characters, Max. 20 characters
+function pwdstrength($pwd) {
+    if (preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#", $pwd)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// f_timestamp - This will show the timestamp from past as Ex: 4 mins ago
+function f_timestamp($time)
+{
+    if($time <> ''){
+        $time = time() - strtotime($time); // to get the time since that moment
+        $time = ($time<1)? 1 : $time;
+        $tokens = array (
+            31536000 => 'year',
+            2592000 => 'month',
+            604800 => 'week',
+            86400 => 'day',
+            3600 => 'hour',
+            60 => 'minute',
+            1 => 'second'
+        );
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) continue;
+            $numberOfUnits = floor($time / $unit);
+            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'').' ago';
+        }
+    } else {
+        return '--';
+    }
+}
 
 // ******************************************
 // User Defined Functions - End
